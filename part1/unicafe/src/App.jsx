@@ -5,6 +5,10 @@ function Button({ text, handleClick }) {
 }
 
 function Statistics({ good, neutral, bad, total }) {
+  if (total === 0) {
+    return <p>No feedback given</p>;
+  }
+
   return (
     <>
       <h2>statistics</h2>
