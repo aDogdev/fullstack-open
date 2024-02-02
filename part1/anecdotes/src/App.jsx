@@ -13,10 +13,21 @@ function App() {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(Array(8).fill(0));
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {points[selected]} votes</p>
+      <button
+        onClick={() => {
+          const newPoints = [...points];
+          newPoints[selected] += 1;
+          setPoints(newPoints);
+        }}
+      >
+        vote
+      </button>
       <button
         onClick={() => {
           const value = Math.floor(Math.random() * 8);
