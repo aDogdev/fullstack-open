@@ -36,6 +36,7 @@ function App() {
       >
         nex anecdote
       </button>
+      <p>{anecdotes[points.indexOf(Math.max(...points))]}</p>
     </div>
   );
 }
