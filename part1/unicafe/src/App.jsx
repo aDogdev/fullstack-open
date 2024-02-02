@@ -4,7 +4,21 @@ function Button({ text, handleClick }) {
   return <button onClick={handleClick}>{text}</button>;
 }
 
-const App = () => {
+function Statistics({ good, neutral, bad, total }) {
+  return (
+    <>
+      <h2>statistics</h2>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
+      <p>all {total}</p>
+      <p>average {(good - bad) / total}</p>
+      <p>positive {(good * 100) / total}%</p>
+    </>
+  );
+}
+
+function App() {
   // guarda los clics de cada botón en su propio estado
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -35,15 +49,9 @@ const App = () => {
       <Button handleClick={handleGoodClick} text="good" />
       <Button handleClick={handleNeutralClick} text="neutral" />
       <Button handleClick={handleBadClick} text="bad" />
-      <h2>statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {(good - bad) / total}</p>
-      <p>positive {(good * 100) / total}%</p>
+      <Statistics good={good} neutral={neutral} bad={bad} total={total} />
     </div>
   );
-};
+}
 
 export default App;
