@@ -10,22 +10,32 @@ function Statistics({ good, neutral, bad, all }) {
   }
 
   return (
-    <div>
-      <StatisticLine text="good" value={good} />
-      <StatisticLine text="neutral" value={neutral} />
-      <StatisticLine text="bad" value={bad} />
-      <StatisticLine text="all" value={all} />
-      <StatisticLine text="average" value={(good - bad) / all} />
-      <StatisticLine text="positive" value={(good * 100) / all + "%"} />
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <h2>statistics</h2>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={all} />
+        <StatisticLine text="average" value={(good - bad) / all} />
+        <StatisticLine text="positive" value={(good * 100) / all + "%"} />
+      </tbody>
+    </table>
   );
 }
 
 function StatisticLine({ text, value }) {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 }
 
@@ -60,7 +70,6 @@ function App() {
       <Button handleClick={handleGoodClick} text="good" />
       <Button handleClick={handleNeutralClick} text="neutral" />
       <Button handleClick={handleBadClick} text="bad" />
-      <h2>statistics</h2>
       <Statistics good={good} neutral={neutral} bad={bad} all={all} />
     </div>
   );
