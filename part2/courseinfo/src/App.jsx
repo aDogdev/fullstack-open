@@ -1,12 +1,12 @@
-function Header(props) {
-  return <h1>{props.course}</h1>;
+function Header({ course }) {
+  return <h1>{course}</h1>;
 }
 
-function Total(props) {
-  return <p>Number of exercises {props.sumOfExercises}</p>;
+function Total({ sumOfExercises }) {
+  return <p>Number of exercises {sumOfExercises}</p>;
 }
 
-function Part({part}) {
+function Part({ part }) {
   return (
     <p>
       {part.name} {part.exercises}
@@ -58,7 +58,13 @@ function App() {
   return (
     <div>
       <Course course={course} />
-      {/* <Total sumOfExercises={exercises1 + exercises2 + exercises3} /> */}
+      <Total
+        sumOfExercises={
+          course.parts[0].exercises +
+          course.parts[1].exercises +
+          course.parts[2].exercises
+        }
+      />
     </div>
   );
 }
