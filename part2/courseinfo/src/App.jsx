@@ -2,8 +2,8 @@ function Header({ course }) {
   return <h1>{course}</h1>;
 }
 
-function Total({ sumOfExercises }) {
-  return <p>Number of exercises {sumOfExercises}</p>;
+function Total({ total }) {
+  return <p>Number of exercises {total}</p>;
 }
 
 function Part({ part }) {
@@ -55,16 +55,14 @@ function App() {
       },
     ],
   };
+  const total = course.parts.reduce((acc, el) => {
+    return acc + el.exercises;
+  }, 0);
+
   return (
     <div>
       <Course course={course} />
-      <Total
-        sumOfExercises={
-          course.parts[0].exercises +
-          course.parts[1].exercises +
-          course.parts[2].exercises
-        }
-      />
+      <Total total={total} />
     </div>
   );
 }
