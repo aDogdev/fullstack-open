@@ -10,6 +10,10 @@ const App = () => {
       name: newName,
     };
 
+    if (persons.find((element) => element.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
     setPersons([...persons, newPerson]);
     setNewName("");
   };
