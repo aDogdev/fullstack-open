@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Persons } from "./components/Persons";
 import { PersonForm } from "./components/PersonForm";
 import { Filter } from "./components/Filter";
-import { getAll, createPerson } from "./services/persons";
+import { getAll, createPerson, deletePerson } from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -23,7 +22,7 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      id: (persons.length + 1).toString(),
     };
 
     if (persons.find((element) => element.name === newName)) {
@@ -50,6 +49,17 @@ const App = () => {
     newFilter === "" ? setShowAll(true) : setShowAll(false);
   };
 
+  const handleDeletePerson = (id) => {
+    if (
+      window.confirm(
+        `Delete ${persons.find((person) => person.id === id).name}?`
+      )
+    ) {
+      deletePerson(id);
+      setPersons(persons.filter((person) => person.id !== id));
+    } else return;
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -63,7 +73,10 @@ const App = () => {
         setNewNumber={setNewNumber}
       />
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons
+        personsToShow={personsToShow}
+        handleDeletePerson={handleDeletePerson}
+      />
     </div>
   );
 };
