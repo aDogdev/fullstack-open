@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { Persons } from "./components/Persons";
 import { PersonForm } from "./components/PersonForm";
 import { Filter } from "./components/Filter";
-import { getAll, createPerson, deletePerson } from "./services/persons";
+import {
+  getAll,
+  createPerson,
+  deletePerson,
+  updatePerson,
+} from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -25,16 +30,32 @@ const App = () => {
       id: (persons.length + 1).toString(),
     };
 
-    if (persons.find((element) => element.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
-    }
+    const equalName = persons.find((element) => element.name === newName);
+    const changedPerson = { ...equalName, number: newNumber };
 
-    createPerson(newPerson).then((newPerson) => {
-      setPersons([...persons, newPerson]);
-      setNewName("");
-      setNewNumber("");
-    });
+    if (equalName) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        updatePerson(equalName.id, changedPerson).then((returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== newPerson.id ? person : returnedPerson
+            )
+          );
+          setNewName("");
+          setNewNumber("");
+        });
+      } else return;
+    } else {
+      createPerson(newPerson).then((newPerson) => {
+        setPersons([...persons, newPerson]);
+        setNewName("");
+        setNewNumber("");
+      });
+    }
   };
 
   const personsToShow = showAll
