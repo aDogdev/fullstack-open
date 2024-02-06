@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Persons } from "./components/Persons";
 import { PersonForm } from "./components/PersonForm";
 import { Filter } from "./components/Filter";
+import { Notification } from "./components/Notification";
 import {
   getAll,
   createPerson,
@@ -15,6 +16,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     getAll().then((initialPersons) => {
@@ -39,22 +41,36 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        updatePerson(equalName.id, changedPerson).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== newPerson.id ? person : returnedPerson
-            )
-          );
-          setNewName("");
-          setNewNumber("");
-        });
+        updatePerson(equalName.id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== newPerson.id ? person : returnedPerson
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .finally(() => {
+            setMessage(`Updated ${changedPerson.name}`);
+            setTimeout(() => {
+              setMessage("");
+            }, 2000);
+          });
       } else return;
     } else {
-      createPerson(newPerson).then((newPerson) => {
-        setPersons([...persons, newPerson]);
-        setNewName("");
-        setNewNumber("");
-      });
+      createPerson(newPerson)
+        .then((newPerson) => {
+          setPersons([...persons, newPerson]);
+          setNewName("");
+          setNewNumber("");
+        })
+        .finally(() => {
+          setMessage(`Added ${newPerson.name}`);
+          setTimeout(() => {
+            setMessage("");
+          }, 2000);
+        });
     }
   };
 
@@ -84,6 +100,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter filter={filter} handleChange={handleChange} />
       <h3>Add a new</h3>
       <PersonForm
