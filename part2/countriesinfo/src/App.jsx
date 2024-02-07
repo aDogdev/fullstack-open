@@ -12,6 +12,11 @@ function App() {
 
     const newValue = value;
 
+    // const countriesToFind = data.filter((country) =>
+    //   country.name.common.toLowerCase().includes(newValue.toLocaleLowerCase())
+    // );
+    // setCountries(countriesToFind);
+
     getAllCountries().then((allCountries) =>
       setCountries(
         allCountries.filter((country) =>
@@ -21,6 +26,10 @@ function App() {
         )
       )
     );
+  };
+
+  const handleShow = (name) => {
+    getCountry(name).then((returnedCountry) => setCountries([returnedCountry]));
   };
 
   return (
@@ -35,7 +44,7 @@ function App() {
         />
         <button type="submit">Search</button>
       </form>
-      {countries && <Countries countries={countries} />}
+      {countries && <Countries countries={countries} handleShow={handleShow} />}
     </>
   );
 }

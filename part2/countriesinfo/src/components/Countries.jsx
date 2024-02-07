@@ -1,6 +1,5 @@
-function Countries({ countries }) {
+function Countries({ countries, handleShow }) {
   const { name, capital, area, flags, languages } = countries[0];
-
   return (
     <>
       {countries.length > 10 ? (
@@ -8,7 +7,12 @@ function Countries({ countries }) {
       ) : countries.length <= 10 && countries.length > 1 ? (
         <>
           {Object.entries(countries).map(([key, value]) => {
-            return <li key={key}>{value.name.common}</li>;
+            return (
+              <li key={key}>
+                {value.name.common}{" "}
+                <button onClick={() => handleShow(value.name.common)}>show</button>
+              </li>
+            );
           })}
         </>
       ) : (
