@@ -1,3 +1,5 @@
+import { Weather } from "./Weather";
+
 function Countries({ countries, handleShow }) {
   const { name, capital, area, flags, languages } = countries[0];
   return (
@@ -10,7 +12,9 @@ function Countries({ countries, handleShow }) {
             return (
               <li key={key}>
                 {value.name.common}{" "}
-                <button onClick={() => handleShow(value.name.common)}>show</button>
+                <button onClick={() => handleShow(value.name.common)}>
+                  show
+                </button>
               </li>
             );
           })}
@@ -27,6 +31,7 @@ function Countries({ countries, handleShow }) {
             })}
           </ul>
           <img src={flags.png} alt={flags.alt} />
+          <Weather capital={capital} />
         </>
       )}
     </>

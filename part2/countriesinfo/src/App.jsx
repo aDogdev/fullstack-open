@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Countries } from "./components/Countries";
 import { getAllCountries, getCountry } from "./services/countries";
-import data from "./mocks/all.json";
 
 function App() {
   const [countries, setCountries] = useState(null);
